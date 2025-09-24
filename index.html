@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Tarjeta 3D</title>
+  <!-- Fuente romántica -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
       display: flex;
@@ -11,13 +13,14 @@
       height: 100vh;
       margin: 0;
       background: radial-gradient(circle at center, #ffe0eb, #fff0f6);
-      font-family: 'Comic Sans MS', cursive;
+      font-family: 'Dancing Script', cursive;
       perspective: 2000px;
+      overflow: hidden;
     }
 
     .card {
-      width: 350px;
-      height: 500px;
+      width: 400px;
+      height: 580px;
       perspective: 1200px;
       cursor: pointer;
       position: relative;
@@ -42,9 +45,9 @@
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      border-radius: 15px;
-      box-sizing: border-box; /* <-- Añadido para ambas caras */
-      padding: 25px;          /* <-- Añadido para ambas caras */
+      border-radius: 20px;
+      box-sizing: border-box;
+      padding: 30px;
     }
 
     /* Portada */
@@ -70,7 +73,7 @@
     }
 
     .hearts span {
-      font-size: 25px;
+      font-size: 35px;
       color: #ff3366;
       text-shadow: 0 0 10px rgba(255,51,102,0.8);
     }
@@ -81,22 +84,22 @@
     }
 
     .panda {
-      font-size: 110px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+      font-size: 150px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     }
 
     .titulo {
-      font-size: 26px;
+      font-size: 40px;
       font-weight: bold;
       color: #ff3366;
-      margin-top: 15px;
+      margin-top: 20px;
       text-shadow: 1px 1px 6px rgba(255,192,203,0.8);
     }
 
     .subtitulo {
-      font-size: 18px;
+      font-size: 28px;
       color: #444;
-      margin-top: 5px;
+      margin-top: 8px;
       font-style: italic;
       opacity: 0.9;
     }
@@ -110,17 +113,18 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-size: 20px;
+      font-size: 28px;
       color: #333;
-      line-height: 1.6;
+      line-height: 1.8;
       position: absolute;
+      padding: 40px;
     }
 
     .card-back::before,
     .card-back::after {
       content: "💕";
       position: absolute;
-      font-size: 28px;
+      font-size: 34px;
       opacity: 0.8;
     }
 
@@ -132,6 +136,30 @@
     .card-back::after {
       bottom: 15px;
       right: 20px;
+    }
+
+    /* Lluvia de letras y fotos */
+    .rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .rain span, .rain img {
+      position: absolute;
+      top: -50px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -156,6 +184,9 @@
     </div>
   </div>
 
+  <!-- lluvia -->
+  <div class="rain" id="rain"></div>
+
   <audio id="music" src="thoseeyes.mp3"></audio>
 
   <script>
@@ -169,7 +200,32 @@
         music.currentTime = 0;
       }
     }
+
+    // Lluvia de letras y fotos
+    const rain = document.getElementById('rain');
+    const letras = ["💖", "❤️", "🌸", "💕", "✨", "😍", "KEYLLIE"];
+    const fotos = ["https://placekitten.com/120/120", "https://placebear.com/120/120"]; 
+
+    setInterval(() => {
+      if (Math.random() > 0.5) {
+        const span = document.createElement("span");
+        span.textContent = letras[Math.floor(Math.random()*letras.length)];
+        span.style.left = Math.random()*100 + "vw";
+        span.style.fontSize = (30 + Math.random()*40) + "px";
+        span.style.animationDuration = (3 + Math.random()*4) + "s";
+        rain.appendChild(span);
+        setTimeout(()=> span.remove(), 7000);
+      } else {
+        const img = document.createElement("img");
+        img.src = fotos[Math.floor(Math.random()*fotos.length)];
+        img.style.left = Math.random()*100 + "vw";
+        img.style.width = "170px";   // más grande
+        img.style.height = "170px";  // más grande
+        img.style.animationDuration = (3 + Math.random()*4) + "s";
+        rain.appendChild(img);
+        setTimeout(()=> img.remove(), 7000);
+      }
+    }, 600);
   </script>
 </body>
 </html>
-
