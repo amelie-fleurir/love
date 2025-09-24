@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tarjeta 3D</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: radial-gradient(circle at center, #ffe0eb, #fff0f6);
+      font-family: 'Comic Sans MS', cursive;
+      perspective: 2000px;
+    }
+
+    .card {
+      width: 350px;
+      height: 500px;
+      perspective: 1200px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .card.open .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      box-sizing: border-box; /* <-- Añadido para ambas caras */
+      padding: 25px;          /* <-- Añadido para ambas caras */
+    }
+
+    /* Portada */
+    .card-front {
+      background: linear-gradient(145deg, #fff, #ffd6e8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2), inset 0 0 25px rgba(255,192,203,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hearts {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      animation: float 3s infinite alternate ease-in-out;
+    }
+
+    .hearts span {
+      font-size: 25px;
+      color: #ff3366;
+      text-shadow: 0 0 10px rgba(255,51,102,0.8);
+    }
+
+    @keyframes float {
+      from { transform: translate(-50%, -10px); }
+      to   { transform: translate(-50%, 20px); }
+    }
+
+    .panda {
+      font-size: 110px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .titulo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #ff3366;
+      margin-top: 15px;
+      text-shadow: 1px 1px 6px rgba(255,192,203,0.8);
+    }
+
+    .subtitulo {
+      font-size: 18px;
+      color: #444;
+      margin-top: 5px;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    /* Reverso */
+    .card-back {
+      background: linear-gradient(145deg, #fff0f6, #ffe0eb);
+      transform: rotateY(180deg);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 25px rgba(255,182,193,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 20px;
+      color: #333;
+      line-height: 1.6;
+      position: absolute;
+    }
+
+    .card-back::before,
+    .card-back::after {
+      content: "💕";
+      position: absolute;
+      font-size: 28px;
+      opacity: 0.8;
+    }
+
+    .card-back::before {
+      top: 15px;
+      left: 20px;
+    }
+
+    .card-back::after {
+      bottom: 15px;
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" onclick="abrirTarjeta()">
+    <div class="card-inner">
+      <!-- Portada -->
+      <div class="card-front">
+        <div class="hearts"><span>❤</span><span>💖</span><span>❤</span></div>
+        <div class="panda">🐼</div>
+        <div class="titulo">Eres mi Persona</div>
+        <div class="subtitulo">Favorita 💖</div>
+      </div>
+      <!-- Interior -->
+      <div class="card-back">
+        <p>
+          Gracias por estar en mi vida 💕<br>
+          Siempre serás mi razón de sonreír 🌸<br>
+          Te quiero infinito ❤️
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <audio id="music" src="https://www.computerhope.com/jargon/m/example.mp3"></audio>
+
+  <script>
+    function abrirTarjeta() {
+      document.querySelector('.card').classList.toggle('open');
+      const music = document.getElementById("music");
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+        music.currentTime = 0;
+      }
+    }
+  </script>
+</body>
+</html>
