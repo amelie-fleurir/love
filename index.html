@@ -24,6 +24,7 @@
       perspective: 1200px;
       cursor: pointer;
       position: relative;
+      z-index: 10; /* La tarjeta queda encima de la lluvia */
     }
 
     .card-inner {
@@ -147,6 +148,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
+      z-index: 1; /* Pasa detrás de la tarjeta */
     }
 
     .rain span, .rain img {
@@ -229,5 +231,3 @@
   </script>
 </body>
 </html>
-
-
